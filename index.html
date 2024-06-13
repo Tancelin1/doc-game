@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>DiscoComicsGames</title>
+    <script type="module" src="/src/renderer.ts"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <button id="open-dialog">Rentrer ici ma note</button>
+
+    <script>
+      const { ipcRenderer } = require('electron');
+      document.getElementById('open-dialog').addEventListener('click', () => {
+        ipcRenderer.send('open-dialog');
+      });
+    </script>
+  </body>
+</html>
