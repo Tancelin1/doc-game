@@ -9,6 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "build": "electron-forge make",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
