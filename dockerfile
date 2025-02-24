@@ -1,12 +1,15 @@
 FROM node:18
 
 # Installer dpkg et fakeroot
-RUN apt-get update && apt-get install -y dpkg fakeroot
+RUN apt-get update && \
+    apt-get install -y dpkg fakeroot
 
-# Installer les dépendances du projet
+# Copier le projet
 WORKDIR /app
 COPY . .
+
+# Installer les dépendances et effectuer le build
 RUN npm install
 
-# Commande de build
+# Exécuter la commande de build
 CMD ["npm", "run", "build"]
