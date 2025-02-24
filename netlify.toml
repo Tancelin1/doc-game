@@ -1,3 +1,4 @@
 [build]
-  command = "docker build -t my-app . && docker run my-app"
-  publish = "dist"
+  command = "apt-get update && apt-get install -y dpkg fakeroot && npm run build"
+  publish = "dist"  # ou le répertoire où ton build est généré
+
