@@ -13,8 +13,6 @@ Sentry.init({
   dsn: "https://3ee750ba2ad7d85fc76a4e2d161fa2b5@o4507407981936640.ingest.de.sentry.io/4507408034693200",
 });
 
-
-
 let mainWindow: BrowserWindow | null;
 let tray: Tray | null;
 
