@@ -20,7 +20,7 @@ export default defineConfig((env) => {
       preserveSymlinks: true,
     },
     server: {
-      port: 3000,  // Définit le port du serveur de développement (ici 3000)
+      port: 5173,  // Définit le port du serveur de développement (ici 3000)
       open: true,  // Ouvre automatiquement le navigateur au démarrage
       hot: true,   // Active le rechargement à chaud
     },

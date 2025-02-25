@@ -10,6 +10,7 @@
     "make": "electron-forge make",
     "prettier": "prettier --write \"{jest,serverless-scripts,src,gatsby}/**/*.{js,jsx,ts,scss}\"",
     "prettier:ci": "prettier --check \"{jest,serverless-scripts,src,gatsby}/**/*.{js,jsx,ts,tsx,scss}\"",
+    "audit": "node audit.js",
     "publish": "electron-forge publish",
     "build": "electron-forge make",
     "lint": "eslint --ext .ts,.tsx ."
@@ -33,6 +34,7 @@
     "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "auditjs": "^4.0.46",
     "electron": "^30.0.6",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^8.57.0",
@@ -47,7 +49,6 @@
   },
   "dependencies": {
     "@sentry/electron": "^5.0.0",
-    "auditjs": "^4.0.46",
     "child_process": "^1.0.2",
     "electron-devtools-installer": "^3.2.0",
     "electron-notification": "^1.0.0",
