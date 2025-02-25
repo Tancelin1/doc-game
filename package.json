@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@sentry/electron": "^5.0.0",
+    "auditjs": "^4.0.46",
     "child_process": "^1.0.2",
     "electron-devtools-installer": "^3.2.0",
     "electron-notification": "^1.0.0",
