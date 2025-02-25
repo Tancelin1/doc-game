@@ -27,15 +27,20 @@ const createWindow = () => {
     },
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // Charge l'URL ou le fichier en fonction de l'environnement
+  if (process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.loadFile(
-      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
+      path.join(
+        __dirname,
+        `../renderer/${process.env.MAIN_WINDOW_VITE_NAME}/index.html`,
+      ),
     );
   }
   mainWindow.webContents.openDevTools();
 
+  // Création du menu de l'application
   const template: Electron.MenuItemConstructorOptions[] = [
     {
       label: "Fichier",
@@ -65,6 +70,7 @@ const createWindow = () => {
   Menu.setApplicationMenu(menu);
 };
 
+// Fonction pour créer la tray (icône dans la barre d'état)
 const createTray = () => {
   const iconPath = path.join(__dirname, "../../src/static", "logo.png");
   tray = new Tray(iconPath);
@@ -86,6 +92,7 @@ const createTray = () => {
   });
 };
 
+// Initialisation de l'application
 app.on("ready", () => {
   createWindow();
   createTray();
@@ -93,7 +100,7 @@ app.on("ready", () => {
   app.setAboutPanelOptions({
     applicationName: "Votre Application",
     applicationVersion: "1.0.0",
-  } as any);
+  });
 
   const notification = new Notification({
     title: "doc-game-comics",
@@ -103,18 +110,21 @@ app.on("ready", () => {
   notification.show();
 });
 
+// Quand toutes les fenêtres sont fermées, quitte l'application sauf sur macOS
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
+// Si l'application est activée sur macOS, recrée la fenêtre si aucune fenêtre n'est ouverte
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
 
+// Ouverture d'un dialogue pour récupérer la note de l'utilisateur
 ipcMain.on("open-dialog", (event) => {
   const dialogWindow = new BrowserWindow({
     width: 400,
@@ -159,6 +169,7 @@ ipcMain.on("open-dialog", (event) => {
   );
 });
 
+// Traitement de la note et fermeture du dialogue si la valeur est correcte
 ipcMain.on("close-dialog", (event, value) => {
   if (value === "20") {
     const dialogWindow = BrowserWindow.getFocusedWindow();
