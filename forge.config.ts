@@ -15,8 +15,7 @@ const config: ForgeConfig = {
       authors: 'Tancelin Navez',
       description: 'Application pour savoir dans quelle œuvre apparaît quel personnage',
     }),
-    new MakerZIP({}, ['darwin']),
-    new MakerZIP({}, ['linux']),
+    new MakerZIP({}),
   ],
   plugins: [
     new VitePlugin({
