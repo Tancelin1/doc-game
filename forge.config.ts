@@ -1,7 +1,6 @@
 import type { ForgeConfig } from '@electron-forge/shared-types';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
-import { MakerDeb } from '@electron-forge/maker-deb';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
@@ -14,10 +13,9 @@ const config: ForgeConfig = {
   makers: [
     new MakerSquirrel({
       authors: 'Tancelin Navez',
-      description: 'application pour savoir dans quelle oeuvre apparait quelle personnage',
+      description: 'Application pour savoir dans quelle œuvre apparaît quel personnage',
     }),
-    new MakerZIP({}, ['darwin']),
-    new MakerDeb({}),
+    new MakerZIP({}, ['darwin', 'linux']), // Ajoute cette ligne pour les formats ZIP
   ],
   plugins: [
     new VitePlugin({
