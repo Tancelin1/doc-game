@@ -48,4 +48,10 @@ const config: ForgeConfig = {
   ],
 };
 
+// Vérification de la plateforme
+if (process.platform !== 'win32') {
+  console.log('Cette application ne peut être lancée que sous Windows.');
+  process.exit(1);  // Quitte le processus si ce n'est pas Windows
+}
+
 export default config;
