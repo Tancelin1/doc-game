@@ -1,11 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  Tray,
-  Menu,
-  ipcMain,
-  Notification,
-} from "electron"; // Import de la classe Notification
+import { app, BrowserWindow, Menu, ipcMain, Notification } from "electron"; // Import de la classe Notification
 import path from "path";
 import * as Sentry from "@sentry/electron/main";
 
@@ -14,7 +7,6 @@ Sentry.init({
 });
 
 let mainWindow: BrowserWindow | null;
-let tray: Tray | null;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -70,32 +62,9 @@ const createWindow = () => {
   Menu.setApplicationMenu(menu);
 };
 
-// Fonction pour créer la tray (icône dans la barre d'état)
-const createTray = () => {
-  const iconPath = path.join(__dirname, "../../src/static", "logo.png");
-  tray = new Tray(iconPath);
-
-  const contextMenu = Menu.buildFromTemplate([
-    { label: "Ouvrir", click: () => mainWindow?.show() },
-    { label: "Minimiser", click: () => mainWindow?.hide() },
-    { label: "Quitter", click: () => app.quit() },
-  ]);
-  tray.setToolTip("DiscoComicsGames");
-  tray.setContextMenu(contextMenu);
-
-  tray.on("click", () => {
-    if (mainWindow?.isVisible()) {
-      mainWindow?.hide();
-    } else {
-      mainWindow?.show();
-    }
-  });
-};
-
 // Initialisation de l'application
 app.on("ready", () => {
   createWindow();
-  createTray();
 
   app.setAboutPanelOptions({
     applicationName: "Votre Application",

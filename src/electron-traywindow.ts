@@ -1,5 +1,4 @@
-const { app, BrowserWindow, Tray, Menu } = require("electron");
-const path = require("path");
+const { app, BrowserWindow } = require("electron");
 
 // Vérifier si typeof BrowserWindow est défini
 type BrowserWindowConstructorOptions = typeof BrowserWindow extends new (
@@ -17,26 +16,4 @@ app.on("ready", () => {
     /* options */
   });
   mainWindow.loadFile("index.html");
-
-  // Créer une icône de plateau
-  const iconPath = path.join(__dirname, "static/logo.png");
-  const tray = new Tray(iconPath);
-
-  // Ajouter un menu contextuel à l'icône de plateau
-  const contextMenu = Menu.buildFromTemplate([
-    { label: "Ouvrir", click: () => mainWindow?.show() },
-    { label: "Fermer", click: () => mainWindow?.hide() },
-    { label: "Quitter", click: () => app.quit() },
-  ]);
-  tray.setToolTip("DiscoComicsGames");
-  tray.setContextMenu(contextMenu);
-
-  // Optionnel : afficher ou masquer la fenêtre principale lorsque l'icône est cliquée
-  tray.on("click", () => {
-    if (mainWindow?.isVisible()) {
-      mainWindow?.hide();
-    } else {
-      mainWindow?.show();
-    }
-  });
 });
