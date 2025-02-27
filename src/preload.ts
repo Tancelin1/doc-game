@@ -9,9 +9,7 @@
 // contextBridge.exposeInMainWorld('electronAPI', {
 //     closeDialog: (value: string) => ipcRenderer.send('close-dialog', value)
 // })
-  
 
 // window.addEventListener('DOMContentLoaded', () => {
 //   ipcRenderer.send('open-dialog');
 // })
-

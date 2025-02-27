@@ -1,5 +1,12 @@
-import { app, BrowserWindow, Tray, Menu, ipcMain, Notification } from 'electron'; // Import de la classe Notification
-import path from 'path';
+import {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  ipcMain,
+  Notification,
+} from "electron"; // Import de la classe Notification
+import path from "path";
 import * as Sentry from "@sentry/electron/main";
 
 Sentry.init({
@@ -14,7 +21,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       contextIsolation: false,
       nodeIntegration: true,
     },
@@ -23,34 +30,35 @@ const createWindow = () => {
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(
+      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
+    );
   }
   mainWindow.webContents.openDevTools();
 
   const template: Electron.MenuItemConstructorOptions[] = [
     {
-      label: 'Fichier',
+      label: "Fichier",
       submenu: [
-        { type: 'separator' },
+        { type: "separator" },
         {
-          label: 'Quitter',
-          accelerator: 'CmdOrCtrl+Q',
+          label: "Quitter",
+          accelerator: "CmdOrCtrl+Q",
           click() {
-            app.quit(); 
-          }
-        }
-      ]
+            app.quit();
+          },
+        },
+      ],
     },
     {
-      label: 'Aide',
+      label: "Aide",
       submenu: [
         {
-          label: 'À propos',
-          click() {
-          }
-        }
-      ]
-    }
+          label: "À propos",
+          click() {},
+        },
+      ],
+    },
   ];
 
   const menu = Menu.buildFromTemplate(template);
@@ -58,18 +66,18 @@ const createWindow = () => {
 };
 
 const createTray = () => {
-  const iconPath = path.join(__dirname, '../../src/static', 'logo.png');
+  const iconPath = path.join(__dirname, "../../src/static", "logo.png");
   tray = new Tray(iconPath);
 
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Ouvrir', click: () => mainWindow?.show() },
-    { label: 'Minimiser', click: () => mainWindow?.hide() },
-    { label: 'Quitter', click: () => app.quit() },
+    { label: "Ouvrir", click: () => mainWindow?.show() },
+    { label: "Minimiser", click: () => mainWindow?.hide() },
+    { label: "Quitter", click: () => app.quit() },
   ]);
-  tray.setToolTip('DiscoComicsGames');
+  tray.setToolTip("DiscoComicsGames");
   tray.setContextMenu(contextMenu);
 
-  tray.on('click', () => {
+  tray.on("click", () => {
     if (mainWindow?.isVisible()) {
       mainWindow?.hide();
     } else {
@@ -78,36 +86,36 @@ const createTray = () => {
   });
 };
 
-app.on('ready', () => {
+app.on("ready", () => {
   createWindow();
   createTray();
 
   app.setAboutPanelOptions({
-    applicationName: 'Votre Application',
-    applicationVersion: '1.0.0',
+    applicationName: "Votre Application",
+    applicationVersion: "1.0.0",
   } as any);
 
   const notification = new Notification({
-    title: 'doc-game-comics',
-    body: 'Bienvenue ! Votre application est prête à être utilisée.'
+    title: "doc-game-comics",
+    body: "Bienvenue ! Votre application est prête à être utilisée.",
   });
 
   notification.show();
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
-app.on('activate', () => {
+app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
 
-ipcMain.on('open-dialog', (event) => {
+ipcMain.on("open-dialog", (event) => {
   const dialogWindow = new BrowserWindow({
     width: 400,
     height: 200,
@@ -119,7 +127,9 @@ ipcMain.on('open-dialog', (event) => {
     },
   });
 
-  dialogWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(`
+  dialogWindow.loadURL(
+    "data:text/html;charset=utf-8," +
+      encodeURIComponent(`
     <!DOCTYPE html>
     <html>
     <head>
@@ -145,14 +155,15 @@ ipcMain.on('open-dialog', (event) => {
       </script>
     </body>
     </html>
-  `));
+  `),
+  );
 });
 
-ipcMain.on('close-dialog', (event, value) => {
-  if (value === '20') {
+ipcMain.on("close-dialog", (event, value) => {
+  if (value === "20") {
     const dialogWindow = BrowserWindow.getFocusedWindow();
     dialogWindow?.close();
   } else {
-    event.sender.send('note-error', 'Veuillez entrer la valeur 20');
+    event.sender.send("note-error", "Veuillez entrer la valeur 20");
   }
 });

@@ -19,6 +19,11 @@ export default defineConfig((env) => {
     resolve: {
       preserveSymlinks: true,
     },
+    server: {
+      port: 5173,  // Définit le port du serveur de développement (ici 3000)
+      open: true,  // Ouvre automatiquement le navigateur au démarrage
+      hot: true,   // Active le rechargement à chaud
+    },
     clearScreen: false,
   } as UserConfig;
 });
